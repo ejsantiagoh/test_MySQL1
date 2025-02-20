@@ -1,60 +1,89 @@
 -- Insercion de datos
-insert into cliente (idCliente,nombre,telefono,direccion) values
-(1,"donald trump","1222222","EEUU"),
-(2,"zelenski","22233333","UCRANIA"),
-(3,"Netanyahu","7777777","ISRAEL"),
-(4,"Elon Musk","555552","EEUU"),
-(5,"Marck zuckerberg","4444422","EEUU"),
-(6,"vladimir putin","666622","Rusia"),
-(7,"Bill Drost","18888","Mexico");
-describe producto;
-select * from producto p ;
+INSERT INTO cliente (idCliente, nombre, telefono, direccion) VALUES
+(1, "donald trump", "1222222", "EEUU"),
+(2, "zelenski", "22233333", "UCRANIA"),
+(3, "Netanyahu", "7777777", "ISRAEL"),
+(4, "Elon Musk", "555552", "EEUU"),
+(5, "Marck zuckerberg", "4444422", "EEUU"),
+(6, "vladimir putin", "666622", "Rusia"),
+(7, "Bill Drost", "18888", "Mexico");
 
-INSERT INTO pizzatest.producto
-(idProducto, disponibles, ingredientes, combos, idCliente)
-VALUES(1, 'medianas', 'Mexicana', 'pizza + gaseosa', 1);
-INSERT INTO pizzatest.producto
-(idProducto, disponibles, ingredientes, combos, idCliente)
-VALUES(2, 'pequeñas', 'Pollo', 'Ninguno', 3);
-INSERT INTO pizzatest.producto
-(idProducto, disponibles, ingredientes, combos, idCliente)
-VALUES(3, 'grandes', 'Hawaina', 'pizza + gaseosa', 1);
-INSERT INTO pizzatest.producto
-(idProducto, disponibles, ingredientes, combos, idCliente)
-VALUES(4, 'pequeñas', 'Mexicana', 'Ninguno', 2);
-INSERT INTO pizzatest.producto
-(idProducto, disponibles, ingredientes, combos, idCliente)
-VALUES(5, 'grandes', 'Mexicana', 'pizza + gaseosa', 5);
-INSERT INTO pizzatest.producto
-(idProducto, disponibles, ingredientes, combos, idCliente)
-VALUES(6, 'medianas', 'Hawaina', 'Ninguno', 4);
-INSERT INTO pizzatest.producto
-(idProducto, disponibles, ingredientes, combos, idCliente)
-VALUES(7, 'grandes', 'Mexicana', 'Ninguno', 1);
+INSERT INTO producto (idProducto, nombre) VALUES
+(1, "Pizza Mexicana"),
+(2, "Pizza Pollo"),
+(3, "Pizza Hawaiana"),
+(4, "Pizza Pepperoni"),
+(5, "Pizza Napolitana"),
+(6, "Coca-Cola"),
+(7, "Sprite");
 
-INSERT INTO pizzatest.pagos (idPagos, idCliente) VALUES
-(2, 2),
-(3, 1),
-(4, 3),
-(5, 1),
-(6, 4),
-(7, 5);
+INSERT INTO precio (idPrecio, idProducto, tamano, precio) VALUES
+(1, 1, 'mediana', 30000),
+(2, 1, 'grande', 50000),
+(3, 2, 'pequeña', 20000),
+(4, 3, 'mediana', 25000),
+(5, 3, 'grande', 35000),
+(6, 4, 'mediana', 28000),
+(7, 5, 'grande', 40000);
 
-INSERT INTO pizzatest.pedido (idPedido, fecha, horaEntrega, idPagos, idCliente)
-VALUES
-(1, '2024-02-18 00:00:00', '2024-02-18 14:05:00', 1, 2),
-(2, '2024-02-18 00:00:00', '2024-02-18 14:05:00', 2, 2),
-(3, '2024-02-18 00:00:00', '2024-02-18 14:05:00', 3, 1),
-(4, '2024-02-18 00:00:00', '2024-02-18 14:05:00', 4, 3),
-(5, '2024-02-18 00:00:00', '2024-02-18 14:05:00', 5, 1),
-(6, '2024-02-18 00:00:00', '2024-02-18 14:05:00', 6, 4),
-(7, '2024-02-18 00:00:00', '2024-02-18 14:05:00', 7, 5);
+INSERT INTO ingrediente (idIngrediente, nombre) VALUES
+(1, "Pollo"),
+(2, "Jalapeño"),
+(3, "Piña"),
+(4, "Pepperoni"),
+(5, "Tomate"),
+(6, "Queso Mozzarella");
 
-INSERT INTO pizzatest.detallado_pedido (idDetPedido, proceso, valor, idProducto)
-VALUES
-(2, 'En marcha para pizza mexicana', 30000, 1),
-(3, 'En marcha para pizza mexicana', 50000, 5),
-(4, 'En marcha para pizza pollo', 20000, 2),
-(5, 'En marcha para pizza mexicana', 30000, 7),
-(6, 'En marcha para pizza hawaina', 20000, 3),
-(7, 'En marcha para pizza hawaina', 20000, 6);
+-- Relación entre productos y sus ingredientes
+INSERT INTO producto_ingrediente (idProducto, idIngrediente) VALUES
+(1, 2), -- Pizza Mexicana con Jalapeño
+(2, 1), -- Pizza Pollo con Pollo
+(3, 3), -- Pizza Hawaiana con Piña
+(4, 4), -- Pizza Pepperoni con Pepperoni
+(5, 5), -- Pizza Napolitana con Tomate
+(5, 6); -- Pizza Napolitana con Queso Mozzarella
+
+
+INSERT INTO combo (idCombo, descripcion) VALUES
+(1, "Pizza + Gaseosa"),
+(2, "Combo Doble Pizza"),
+(3, "Combo Familiar");
+
+-- Relación entre combos y productos
+INSERT INTO combo_producto (idCombo, idProducto) VALUES
+(1, 1), -- Combo Pizza + Gaseosa incluye Pizza Mexicana
+(1, 6), -- Combo Pizza + Gaseosa incluye Coca-Cola
+(2, 2), -- Combo Doble Pizza incluye Pizza Pollo
+(2, 3), -- Combo Doble Pizza incluye Pizza Hawaiana
+(3, 5), -- Combo Familiar incluye Pizza Napolitana
+(3, 7); -- Combo Familiar incluye Sprite
+
+
+INSERT INTO pagos (idPagos, idCliente, monto, estado) VALUES
+(1, 2, 50000, 'pagado'),
+(2, 3, 30000, 'pendiente'),
+(3, 1, 60000, 'pagado'),
+(4, 3, 70000, 'pagado'),
+(5, 1, 40000, 'pendiente'),
+(6, 4, 25000, 'pagado'),
+(7, 5, 35000, 'pendiente');
+
+
+INSERT INTO pedido (idPedido, fecha, horaRecogida, idPagos, idCliente) VALUES
+(1, '2025-02-18 12:00:00', '2025-02-18 14:05:00', 1, 2),
+(2, '2025-02-18 12:30:00', '2025-02-18 14:30:00', 2, 3),
+(3, '2025-02-18 13:00:00', '2025-02-18 15:00:00', 3, 1),
+(4, '2025-02-18 14:00:00', '2025-02-18 16:00:00', 4, 3),
+(5, '2025-02-18 15:00:00', '2025-02-18 17:30:00', 5, 1),
+(6, '2025-02-18 16:00:00', '2025-02-18 18:00:00', 6, 4),
+(7, '2025-02-18 17:00:00', '2025-02-18 19:30:00', 7, 5);
+
+INSERT INTO detallado_pedido (idDetPedido, idPedido, idProducto, tamano, cantidad, valor) VALUES
+(1, 1, 1, 'mediana', 1, 30000),
+(2, 2, 2, 'pequeña', 1, 20000),
+(3, 3, 3, 'grande', 1, 35000),
+(4, 4, 4, 'mediana', 1, 28000),
+(5, 5, 5, 'grande', 1, 40000),
+(6, 6, 6, NULL, 1, 25000), -- Coca-Cola sin tamaño
+(7, 7, 7, NULL, 1, 35000); -- Sprite sin tamaño
+
